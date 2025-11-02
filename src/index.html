@@ -365,42 +365,48 @@
       // Khi click vào chữ "Click" cũng sang MyLove.html
       var clickLabel = document.getElementById('gift-click-label');
       // Hiển thị iframe khi mở quà thay vì chuyển trang
-      function showMyLoveIframe() {
-        // Nếu đã có iframe thì không tạo lại
-        if (document.getElementById('mylove-iframe-overlay')) return;
-        var overlay = document.createElement('div');
-        overlay.id = 'mylove-iframe-overlay';
-        overlay.style.position = 'fixed';
-        overlay.style.left = 0;
-        overlay.style.top = 0;
-        overlay.style.width = '100vw';
-        overlay.style.height = '100vh';
-        overlay.style.background = 'rgba(0,0,0,0.85)';
-        overlay.style.zIndex = 3000;
-        overlay.style.display = 'flex';
-        overlay.style.alignItems = 'center';
-        overlay.style.justifyContent = 'center';
-        overlay.innerHTML = `
-          <button id="close-mylove-iframe" style="position:absolute;top:16px;right:16px;z-index:10;background:#fff;border:none;border-radius:50%;width:40px;height:40px;font-size:2em;box-shadow:0 2px 12px #ffb2d9;">&times;</button>
-          <iframe src="MyLove.html" style="width:98vw;height:98vh;border-radius:18px;border:none;box-shadow:0 4px 32px #ffb2d9;overflow:hidden;background:#fff;" allow="autoplay"></iframe>
-        `;
-        document.body.appendChild(overlay);
-        document.getElementById('close-mylove-iframe').onclick = function() {
-          document.body.removeChild(overlay);
-        };
-      }
+    //   function showMyLoveIframe() {
+    //     // Nếu đã có iframe thì không tạo lại
+    //     if (document.getElementById('mylove-iframe-overlay')) return;
+    //     var overlay = document.createElement('div');
+    //     overlay.id = 'mylove-iframe-overlay';
+    //     overlay.style.position = 'fixed';
+    //     overlay.style.left = 0;
+    //     overlay.style.top = 0;
+    //     overlay.style.width = '100vw';
+    //     overlay.style.height = '100vh';
+    //     overlay.style.background = 'rgba(0,0,0,0.85)';
+    //     overlay.style.zIndex = 3000;
+    //     overlay.style.display = 'flex';
+    //     overlay.style.alignItems = 'center';
+    //     overlay.style.justifyContent = 'center';
+    //     overlay.innerHTML = `
+    //       <button id="close-mylove-iframe" style="position:absolute;top:16px;right:16px;z-index:10;background:#fff;border:none;border-radius:50%;width:40px;height:40px;font-size:2em;box-shadow:0 2px 12px #ffb2d9;">&times;</button>
+    //       <iframe src="MyLove.html" style="width:98vw;height:98vh;border-radius:18px;border:none;box-shadow:0 4px 32px #ffb2d9;overflow:hidden;background:#fff;" allow="autoplay"></iframe>
+    //     `;
+    //     document.body.appendChild(overlay);
+    //     document.getElementById('close-mylove-iframe').onclick = function() {
+    //       document.body.removeChild(overlay);
+    //     };
+    //   }
       if (clickLabel) {
         clickLabel.addEventListener('click', function(e) {
           e.stopPropagation();
-          showMyLoveIframe();
+          try { localStorage.setItem('openGift', '1'); } catch(e){}
+          window.location.href = 'MyLove.html';
+
+          //showMyLoveIframe();
         });
       }
       if (giftBox) {
-        giftBox.addEventListener('click', function(e) {
-          e.stopPropagation();
-          showMyLoveIframe();
-        });
-      }
+          giftBox.addEventListener('click', function() {
+                  try { localStorage.setItem('openGift', '1'); } catch(e){}
+                      });
+        // giftBox.addEventListener('click', function(e) {
+        //   e.stopPropagation();
+        //   //showMyLoveIframe();
+        // });
+                    }
     });
     </script>
 </body>

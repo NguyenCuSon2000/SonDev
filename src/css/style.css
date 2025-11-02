@@ -1,0 +1,314 @@
+/* Stack cake above gift box on mobile */
+.cake-gift-stack {
+    flex-direction: row;
+}
+@media (max-width: 700px) {
+    .cake-gift-stack {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+    .cake-img-stack, .gift-img-stack {
+        width: 140px !important;
+        height: 140px !important;
+    }
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(120deg, #ffe0ec 0%, #f7f7ff 100%);
+    min-height: 100vh;
+}
+
+.container, .mylove-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cake-container {
+    position: relative;
+    margin: 30px auto 10px auto;
+    width: 320px;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cake, .candle, .flower, .icon {
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    transition: transform 1s;
+}
+.cake { left: 80px; top: 80px; z-index: 2; }
+.candle { left: 100px; top: 40px; z-index: 3; }
+.flower { left: 0; top: 120px; z-index: 1; }
+.icon { right: 0; top: 120px; z-index: 1; }
+
+.gift-box {
+    margin: 30px auto;
+    width: 160px;
+    height: 160px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.gift-box img {
+    width: 120px;
+    height: 120px;
+    animation: bounce 1.2s infinite;
+}
+.gift-box span {
+    margin-top: 8px;
+    color: #d72660;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.gift-effect {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    border-radius: 50%;
+    box-shadow: 0 0 30px 10px #ffe0ec, 0 0 60px 20px #f7b2b7;
+    opacity: 0.5;
+    animation: glow 2s infinite alternate;
+}
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+@keyframes glow {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.7; }
+}
+
+
+.animated-image {
+    position: fixed;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 24px;
+    box-shadow: 0 8px 32px #d7266080, 0 2px 8px #fff8;
+    border: 4px solid #fff;
+    z-index: 10;
+    transition: transform 2s cubic-bezier(.68,-0.55,.27,1.55), box-shadow 0.5s;
+    background: #fff;
+    animation: float 4s ease-in-out infinite;
+}
+.corner.top-left { left: 24px; top: 24px; }
+.corner.top-right { right: 24px; top: 24px; }
+.corner.bottom-left { left: 24px; bottom: 24px; }
+.corner.bottom-right { right: 24px; bottom: 24px; }
+.edge.top-center {
+    left: 50%;
+    top: 16px;
+    transform: translateX(-50%);
+}
+.edge.bottom-center {
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-18px) scale(1.05); }
+}
+
+@media (max-width: 700px) {
+    .animated-image {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+        border-width: 2px;
+    }
+    .cake-container {
+        width: 90px;
+        height: 90px;
+    }
+    .cake, .candle, .flower, .icon {
+        width: 48px;
+        height: 48px;
+    }
+    .gift-box {
+        width: 48px;
+        height: 48px;
+    }
+    .gift-box img {
+        width: 36px;
+        height: 36px;
+    }
+    .mylove-img {
+        width: 48px;
+        height: 60px;
+    }
+    .heart {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* MyLove.html styles */
+.mylove-bg {
+    background: linear-gradient(120deg, #f7f7ff 0%, #ffe0ec 100%);
+    min-height: 100vh;
+    overflow: hidden;
+}
+.mylove-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 80px;
+    gap: 40px;
+}
+.mylove-img {
+    width: 220px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 28px;
+    box-shadow: 0 8px 32px #d72660aa;
+    border: 4px solid #fff;
+    background: #fff;
+}
+.mylove-img.left { animation: leftIn 1.5s; }
+.mylove-img.right { animation: rightIn 1.5s; }
+   @keyframes clickGiftPulse {
+          0% { box-shadow: 0 2px 12px #ffb2d9, 0 0 0 #fff; transform: scale(1); }
+          60% { box-shadow: 0 6px 24px #ffb2d9, 0 0 16px #fff; transform: scale(1.08); }
+          100% { box-shadow: 0 2px 12px #ffb2d9, 0 0 0 #fff; transform: scale(1); }
+        }
+@keyframes leftIn {
+    from { transform: translateX(-200px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+@keyframes rightIn {
+    from { transform: translateX(200px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+.heart-effect {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 30px;
+}
+.heart {
+    width: 90px;
+    height: 90px;
+    animation: heartbeat 1s infinite;
+}
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    20% { transform: scale(1.2); }
+    40% { transform: scale(0.95); }
+    60% { transform: scale(1.1); }
+    80% { transform: scale(0.98); }
+}
+
+#fireworks-canvas {
+    position: fixed;
+    left: 0; top: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 100;
+}
+
+@media (max-width: 700px) {
+    .cake-container, .mylove-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .mylove-img {
+        width: 60vw;
+        max-width: 180px;
+        height: auto;
+        aspect-ratio: 4/5;
+    }
+    .heart {
+        width: 48px;
+        height: 48px;
+    }
+    .cake, .candle, .flower, .icon {
+        width: 48px;
+    }
+    .animated-image {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+        border-width: 2px;
+    }
+}
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #ffcc00;
+}
+
+h1 {
+    font-size: 3em;
+    margin: 0;
+}
+
+h2 {
+    font-size: 2em;
+    margin: 10px 0;
+}
+
+.birthday-cake {
+    width: 300px;
+    margin: 20px auto;
+    animation: bounce 1s infinite;
+}
+
+.gift-box {
+    width: 150px;
+    margin: 20px auto;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.gift-box:hover {
+    transform: scale(1.1);
+}
+
+.fireworks {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #ffcc00;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}

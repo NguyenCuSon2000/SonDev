@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Celebration</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Đảm bảo canvas pháo hoa nằm ngay sau thẻ <body> và không bị che -->
+    <canvas id="fireworks-canvas" style="position:fixed;left:0;top:0;width:100vw;height:100vh;pointer-events:none;z-index:9999;"></canvas>
+    <div class="container">
+        <!-- Tiêu đề Happy Birthday đẹp -->
+        <h1 id="happy-title" style="
+            font-family: 'Pacifico', cursive;
+            font-size: 3.2em;
+            color: #ff4e9b;
+            text-align: center;
+            margin-top: 32px;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 24px #fff, 0 2px 8px #ffb2d9;
+            animation: happyTitleGlow 2s infinite alternate;
+        ">
+          Happy Birthday Yến <span style="font-size:0.6em;">10-11-2000</span>
+        </h1>
+        <div class="birthday-wish" style="text-align:center;margin-bottom:18px;">
+          <span class="wish-text">
+            Chúc bạn sinh nhật thật hạnh phúc và ngập tràn yêu thương.<br>
+            Mình may mắn lắm khi có bạn luôn đồng hành và giúp đỡ mình — người con gái dịu dàng, ấm áp và tuyệt vời nhất.<br>
+            Mong hôm nay, mọi điều tốt đẹp nhất trên đời đều dành cho bạn 💐🎂
+          </span>
+        </div>
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+        .birthday-wish .wish-text {
+          display: inline-block;
+          font-family: 'Great Vibes', 'Pacifico', cursive;
+          font-size: 1.45em;
+          color: #d72660;
+          background: rgba(255,255,255,0.7);
+          border-radius: 18px;
+          padding: 10px 24px 10px 24px;
+          margin-top: 8px;
+          box-shadow: 0 2px 16px #ffb2d9;
+          text-shadow: 0 2px 8px #fff8;
+          animation: wishFadeIn 2.2s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes wishFadeIn {
+          0% { opacity: 0; transform: translateY(24px) scale(0.95); }
+          80% { opacity: 1; transform: translateY(-4px) scale(1.03); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        </style>
+        
+
+        <style>
+        @keyframes happyTitleGlow {
+          0% { text-shadow: 0 4px 24px #fff, 0 2px 8px #ffb2d9; color: #ff4e9b; }
+          50% { text-shadow: 0 8px 32px #ffb2d9, 0 2px 16px #fff; color: #ffb2d9; }
+          100% { text-shadow: 0 4px 24px #fff, 0 2px 8px #ff4e9b; color: #ff4e9b; }
+        }
+        </style>
+
+        <!-- Icon sinh nhật động -->
+        <div id="birthday-icons">
+          <span class="birthday-icon" style="left:8vw;top:18vh;">🎂</span>
+          <span class="birthday-icon" style="left:80vw;top:6vh;">🎉</span>
+          <span class="birthday-icon" style="left:20vw;top:80vh;">🎈</span>
+          <span class="birthday-icon" style="left:70vw;top:75vh;">🎆</span>
+          <span class="birthday-icon" style="left:70vw;top:20vh;">🧁</span>
+          <span class="birthday-icon" style="left:20vw;top:60vh;">🎇</span>
+        </div>
+        <style>
+        #birthday-icons {
+          position: fixed;
+          left: 0; top: 0;
+          width: 100vw; height: 100vh;
+          pointer-events: none;
+          z-index: 1200;
+        }
+        .birthday-icon {
+          position: absolute;
+          font-size: 2.5em;
+          filter: drop-shadow(0 2px 8px #fff8);
+          animation: float-birthday 4s ease-in-out infinite alternate;
+          user-select: none;
+        }
+        .birthday-icon:nth-child(2) { animation-delay: 1s; }
+        .birthday-icon:nth-child(3) { animation-delay: 2s; }
+        .birthday-icon:nth-child(4) { animation-delay: 1.5s; }
+        .birthday-icon:nth-child(5) { animation-delay: 0.5s; }
+        .birthday-icon:nth-child(6) { animation-delay: 2.5s; }
+        @keyframes float-birthday {
+          0% { transform: translateY(0) scale(1); }
+          50% { transform: translateY(-18px) scale(1.08); }
+          100% { transform: translateY(0) scale(1); }
+        }
+        </style>
+        <div class="cake-gift-stack" style="display:flex;justify-content:center;align-items:center;gap:32px;margin:32px 0;">
+          <img src="assets/birthdaycake.jpg" alt="Bánh sinh nhật" class="cake-img-stack" style="width:220px;height:220px;border:none;box-shadow:none;background:none;">
+          <div style="display:flex;flex-direction:column;align-items:center;">
+            <img id="gift-box" src="assets/giftbox.jpg" alt="Hộp quà" class="gift-img-stack" style="width:220px;height:220px;border:none;box-shadow:none;background:none;">
+            <span id="gift-click-label" class="d-md-none" style="margin-top:8px;font-family:'Pacifico',cursive;font-size:1.3em;color:#ff4e9b;background:rgba(255,255,255,0.85);padding:4px 18px 4px 18px;border-radius:18px;box-shadow:0 2px 12px #ffb2d9;animation: clickGiftPulse 1.2s infinite alternate;cursor:pointer;">Click 🎁</span>
+          </div>
+        </div>
+
+        <!-- Desktop: 6 ảnh động quanh màn hình -->
+        <div id="desktop-images">
+          <img src="assets/1.jpg" class="animated-image corner top-left" alt="Ảnh 1" style="width:180px;height:180px;">
+          <img src="assets/2.jpg" class="animated-image edge top-center" alt="Ảnh 2" style="width:180px;height:180px;">
+          <img src="assets/3.jpg" class="animated-image corner top-right" alt="Ảnh 3" style="width:180px;height:180px;">
+          <img src="assets/4.jpg" class="animated-image corner bottom-right" alt="Ảnh 4" style="width:180px;height:180px;">
+          <img src="assets/5.jpg" class="animated-image edge bottom-center" alt="Ảnh 5" style="width:180px;height:180px;">
+          <img src="assets/6.jpg" class="animated-image corner bottom-left" alt="Ảnh 6" style="width:180px;height:180px;">
+        </div>
+        <!-- Mobile: Bootstrap Carousel -->
+        <div id="mobile-carousel" class="d-none">
+          <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="assets/1.jpg" class="d-block w-100 carousel-zoomable" alt="Ảnh 1">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/2.jpg" class="d-block w-100 carousel-zoomable" alt="Ảnh 2">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/3.jpg" class="d-block w-100 carousel-zoomable" alt="Ảnh 3">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/4.jpg" class="d-block w-100 carousel-zoomable" alt="Ảnh 4">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/5.jpg" class="d-block w-100 carousel-zoomable" alt="Ảnh 5">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/6.jpg" class="d-block w-100 carousel-zoomable" alt="Ảnh 6">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Overlay carousel for zooming images on mobile -->
+        <div id="zoomCarouselOverlay" class="d-none" style="position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);z-index:2000;display:flex;align-items:center;justify-content:center;">
+          <div style="position:relative;width:90vw;max-width:500px;">
+            <button id="closeZoomCarousel" style="position:absolute;top:8px;right:8px;z-index:10;background:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1.5em;">&times;</button>
+            <div id="zoomCarousel" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="assets/1.jpg" class="d-block w-100" alt="Ảnh 1">
+                </div>
+                <div class="carousel-item">
+                  <img src="assets/2.jpg" class="d-block w-100" alt="Ảnh 2">
+                </div>
+                <div class="carousel-item">
+                  <img src="assets/3.jpg" class="d-block w-100" alt="Ảnh 3">
+                </div>
+                <div class="carousel-item">
+                  <img src="assets/4.jpg" class="d-block w-100" alt="Ảnh 4">
+                </div>
+                <div class="carousel-item">
+                  <img src="assets/5.jpg" class="d-block w-100" alt="Ảnh 5">
+                </div>
+                <div class="carousel-item">
+                  <img src="assets/6.jpg" class="d-block w-100" alt="Ảnh 6">
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#zoomCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#zoomCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Overlay carousel for zooming images on desktop -->
+        <div id="zoomDesktopCarouselOverlay" class="d-none" style="position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);z-index:2000;display:flex;align-items:center;justify-content:center;">
+          <div style="position:relative;width:90vw;max-width:700px;">
+            <button id="closeZoomDesktopCarousel" style="position:absolute;top:8px;right:8px;z-index:10;background:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1.5em;">&times;</button>
+            <div id="zoomDesktopCarousel" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="assets/1.jpg" class="d-block w-100" alt="Ảnh 1">
+                </div>
+                <div class="carousel-item">
+                  <img src="assets/2.jpg" class="d-block w-100" alt="Ảnh 2">
+                </div>
+                <div class="carousel-item">
+                  <img src="assets/3.jpg" class="d-block w-100" alt="Ảnh 3">
+                </div>
+                <div class="carousel-item">
+                  <img src="assets/4.jpg" class="d-block w-100" alt="Ảnh 4">
+                </div>
+                <div class="carousel-item">
+                  <img src="assets/5.jpg" class="d-block w-100" alt="Ảnh 5">
+                </div>
+                <div class="carousel-item">
+                  <img src="assets/6.jpg" class="d-block w-100" alt="Ảnh 6">
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#zoomDesktopCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#zoomDesktopCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+  <audio id="birthday-audio" src="assets/happy-birthday.mp3" loop></audio>
+        <script src="js/main.js"></script>
+        <script>
+        // Chỉ phát nhạc sau khi người dùng tương tác lần đầu
+        document.addEventListener('DOMContentLoaded', function() {
+          var audio = document.getElementById('birthday-audio');
+          function playMusicOnce() {
+            if (audio.paused) {
+              audio.play().catch(()=>{});
+            }
+            window.removeEventListener('click', playMusicOnce);
+            window.removeEventListener('touchstart', playMusicOnce);
+          }
+          window.addEventListener('click', playMusicOnce);
+          window.addEventListener('touchstart', playMusicOnce);
+        });
+        </script>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/fireworks.js"></script>
+    <script>
+    // Click hộp quà sang MyLove.html
+    document.addEventListener('DOMContentLoaded', function() {
+        var giftBox = document.getElementById('gift-box');
+        if(giftBox) {
+            giftBox.addEventListener('click', function() {
+                window.location.href = 'MyLove.html';
+            });
+        }
+        // Zoom ảnh khi click
+        function showZoom(src) {
+            let overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.left = 0;
+            overlay.style.top = 0;
+            overlay.style.width = '100vw';
+            overlay.style.height = '100vh';
+            overlay.style.background = 'rgba(0,0,0,0.8)';
+            overlay.style.display = 'flex';
+            overlay.style.alignItems = 'center';
+            overlay.style.justifyContent = 'center';
+            overlay.style.zIndex = 2000;
+            overlay.innerHTML = `<img src='${src}' style='max-width:90vw;max-height:90vh;border-radius:24px;box-shadow:0 8px 32px #fff8;'>`;
+            overlay.onclick = function() { document.body.removeChild(overlay); };
+            document.body.appendChild(overlay);
+        }
+        document.querySelectorAll('img.animated-image, #desktop-images img, #mobile-carousel img, .cake-container img, .gift-box img').forEach(img => {
+            img.style.cursor = 'zoom-in';
+            img.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showZoom(this.src);
+            });
+        });
+
+        // Ẩn/hiện carousel hoặc ảnh động tùy thiết bị
+        function handleCarouselDisplay() {
+          if(window.innerWidth <= 700) {
+            document.getElementById('desktop-images').style.display = 'none';
+            document.getElementById('mobile-carousel').classList.remove('d-none');
+          } else {
+            document.getElementById('desktop-images').style.display = '';
+            document.getElementById('mobile-carousel').classList.add('d-none');
+          }
+        }
+        window.addEventListener('resize', handleCarouselDisplay);
+        window.addEventListener('DOMContentLoaded', handleCarouselDisplay);
+        // Overlay carousel logic for mobile
+        function showZoomCarousel(idx) {
+          var overlay = document.getElementById('zoomCarouselOverlay');
+          overlay.classList.remove('d-none');
+          // Kích hoạt đúng slide
+          var carousel = document.getElementById('zoomCarousel');
+          var items = carousel.querySelectorAll('.carousel-item');
+          items.forEach(function(item, i) {
+            item.classList.remove('active');
+            if(i === idx) item.classList.add('active');
+          });
+        }
+        document.getElementById('closeZoomCarousel').onclick = function() {
+          document.getElementById('zoomCarouselOverlay').classList.add('d-none');
+        };
+        // Chỉ áp dụng cho mobile
+        function setupMobileZoomCarousel() {
+          if(window.innerWidth <= 700) {
+            var imgs = document.querySelectorAll('#mobile-carousel img.carousel-zoomable');
+            imgs.forEach(function(img, idx) {
+              img.style.cursor = 'zoom-in';
+              img.onclick = function(e) {
+                e.stopPropagation();
+                showZoomCarousel(idx);
+              };
+            });
+          }
+        }
+        window.addEventListener('DOMContentLoaded', setupMobileZoomCarousel);
+        window.addEventListener('resize', setupMobileZoomCarousel);
+
+        // Overlay carousel logic for desktop
+        function showZoomDesktopCarousel(idx) {
+          var overlay = document.getElementById('zoomDesktopCarouselOverlay');
+          overlay.classList.remove('d-none');
+          // Kích hoạt đúng slide
+          var carousel = document.getElementById('zoomDesktopCarousel');
+          var items = carousel.querySelectorAll('.carousel-item');
+          items.forEach(function(item, i) {
+            item.classList.remove('active');
+            if(i === idx) item.classList.add('active');
+          });
+        }
+        document.getElementById('closeZoomDesktopCarousel').onclick = function() {
+          document.getElementById('zoomDesktopCarouselOverlay').classList.add('d-none');
+        };
+        // Chỉ áp dụng cho desktop
+        function setupDesktopZoomCarousel() {
+          if(window.innerWidth > 700) {
+            var imgs = document.querySelectorAll('#desktop-images img.animated-image');
+            imgs.forEach(function(img, idx) {
+              img.style.cursor = 'zoom-in';
+              img.onclick = function(e) {
+                e.stopPropagation();
+                showZoomDesktopCarousel(idx);
+              };
+            });
+          }
+        }
+        window.addEventListener('DOMContentLoaded', setupDesktopZoomCarousel);
+        window.addEventListener('resize', setupDesktopZoomCarousel);
+      // Khi click vào chữ "Click" cũng sang MyLove.html
+      var clickLabel = document.getElementById('gift-click-label');
+      if (clickLabel) {
+        clickLabel.addEventListener('click', function(e) {
+          e.stopPropagation();
+          window.location.href = 'MyLove.html';
+        });
+      }
+    });
+    </script>
+</body>
+</html>

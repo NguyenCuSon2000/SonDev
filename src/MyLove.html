@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>My Love</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="mylove-bg">
+            <div class="love-message-container">
+                <span class="love-message-text">
+                    🎂💐Món quà vô giá nhất mà mình có được cho bạn là dành tình cảm và làm cho bạn hạnh phúc nhất💞.<br>
+                    Dù mình ít khi nói được những lời lãng mãn, lời hay ý đẹp như người khác.🌹<br>
+                    Nhưng mình có thể làm những gì mà làm cho bạn cảm thấy yên tâm và hạnh phúc nhất.<br>
+                    Hãy cho mình cơ hội để làm thế nhé💖✨
+                </span>
+            </div>
+            <div class="mylove-container">
+                    <img src="assets/Yen.jpg" alt="Yen" class="mylove-img left">
+                    <div class="heart-effect">
+                            <img src="assets/heart.png" alt="Heart" class="heart">
+                    </div>
+                    <img src="assets/Son.jpg" alt="Son" class="mylove-img right">
+            </div>
+</style>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+.love-message-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+    margin-bottom: 12px;
+}
+.love-message-text {
+    display: inline-block;
+    font-family: 'Great Vibes', 'Pacifico', cursive;
+    font-size: 1.35em;
+    color: #d72660;
+    background: rgba(255,255,255,0.85);
+    border-radius: 20px;
+    padding: 14px 28px 14px 28px;
+    box-shadow: 0 2px 16px #ffb2d9;
+    text-shadow: 0 2px 8px #fff8;
+    animation: loveMsgFadeIn 2.2s cubic-bezier(.68,-0.55,.27,1.55);
+    text-align: center;
+}
+@keyframes loveMsgFadeIn {
+    0% { opacity: 0; transform: translateY(32px) scale(0.95); }
+    80% { opacity: 1; transform: translateY(-4px) scale(1.03); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (max-width: 700px) {
+    .love-message-container {
+        margin-top: 12vw;
+        margin-bottom: 4vw;
+        padding: 0 2vw;
+    }
+    .love-message-text {
+        font-size: 1em;
+        padding: 8px 4vw;
+        border-radius: 14px;
+        box-shadow: 0 1px 8px #ffb2d9;
+        word-break: break-word;
+        line-height: 1.5;
+        background: rgba(255,255,255,0.95);
+    }
+}
+</style>
+    <canvas id="fireworks-canvas"></canvas>
+    <audio id="yesido-audio" src="assets/Beautiful In White.mp3" autoplay loop></audio>
+    <script src="js/fireworks.js"></script>
+    <script>
+        // Play audio automatically
+        document.getElementById('yesido-audio').play();
+    </script>
+</body>
+</html>

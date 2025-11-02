@@ -392,21 +392,21 @@
       if (clickLabel) {
         clickLabel.addEventListener('click', function(e) {
           e.stopPropagation();
-          try { localStorage.setItem('openGift', '1'); } catch(e){}
+                    try { localStorage.setItem('openGift', '1'); } catch(e){}
+          window.location.href = 'MyLove.html';
+
+         // showMyLoveIframe();
+        });
+      }
+      if (giftBox) {
+        giftBox.addEventListener('click', function(e) {
+          e.stopPropagation();
+              try { localStorage.setItem('openGift', '1'); } catch(e){}
           window.location.href = 'MyLove.html';
 
           //showMyLoveIframe();
         });
       }
-      if (giftBox) {
-          giftBox.addEventListener('click', function() {
-                  try { localStorage.setItem('openGift', '1'); } catch(e){}
-                      });
-        // giftBox.addEventListener('click', function(e) {
-        //   e.stopPropagation();
-        //   //showMyLoveIframe();
-        // });
-                    }
     });
     </script>
 </body>

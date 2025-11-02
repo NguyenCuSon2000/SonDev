@@ -104,7 +104,7 @@
           <img src="assets/birthdaycake.jpg" alt="Bánh sinh nhật" class="cake-img-stack" style="width:220px;height:220px;border:none;box-shadow:none;background:none;">
           <div style="display:flex;flex-direction:column;align-items:center;">
             <img id="gift-box" src="assets/giftbox.jpg" alt="Hộp quà" class="gift-img-stack" style="width:220px;height:220px;border:none;box-shadow:none;background:none;">
-            <span id="gift-click-label" class="d-md-none" style="margin-top:8px;font-family:'Pacifico',cursive;font-size:1.3em;color:#ff4e9b;background:rgba(255,255,255,0.85);padding:4px 18px 4px 18px;border-radius:18px;box-shadow:0 2px 12px #ffb2d9;animation: clickGiftPulse 1.2s infinite alternate;cursor:pointer;">Click 🎁</span>
+            <span id="gift-click-label" class="d-md-none" style="margin-top:8px;font-family:'Pacifico',cursive;font-size:1.3em;color:#ff4e9b;background:rgba(255,255,255,0.85);padding:4px 18px 4px 18px;border-radius:18px;box-shadow:0 2px 12px #ffb2d9;animation: clickGiftPulse 1.2s infinite alternate;cursor:pointer;">Mở quà Yến nha 🎁</span>
           </div>
         </div>
 
@@ -367,7 +367,14 @@
       if (clickLabel) {
         clickLabel.addEventListener('click', function(e) {
           e.stopPropagation();
+          try { localStorage.setItem('openGift', '1'); } catch(e){}
           window.location.href = 'MyLove.html';
+        });
+      }
+      // Khi click vào hộp quà cũng lưu trạng thái
+      if (giftBox) {
+        giftBox.addEventListener('click', function() {
+          try { localStorage.setItem('openGift', '1'); } catch(e){}
         });
       }
     });

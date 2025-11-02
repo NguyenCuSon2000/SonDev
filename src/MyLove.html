@@ -68,11 +68,36 @@
 }
 </style>
     <canvas id="fireworks-canvas"></canvas>
-    <audio id="yesido-audio" src="assets/Beautiful In White.mp3" autoplay loop></audio>
-    <script src="js/fireworks.js"></script>
-    <script>
-        // Play audio automatically
-        document.getElementById('yesido-audio').play();
-    </script>
+        <audio id="yesido-audio" src="assets/Beautiful In White.mp3" loop></audio>
+        <script src="js/fireworks.js"></script>
+        <script>
+        // Phát nhạc nếu vừa click mở quà từ trang trước
+        document.addEventListener('DOMContentLoaded', function() {
+            var audio = document.getElementById('yesido-audio');
+            var shouldPlay = false;
+            try {
+                if (localStorage.getItem('openGift') === '1') {
+                    shouldPlay = true;
+                    localStorage.removeItem('openGift');
+                }
+            } catch(e){}
+            if (shouldPlay) {
+                setTimeout(function() {
+                    audio.play().catch(()=>{});
+                }, 100);
+            } else {
+                // Nếu không phải từ click, chỉ phát khi user tương tác
+                function playMusicOnce() {
+                    if (audio.paused) {
+                        audio.play().catch(()=>{});
+                    }
+                    window.removeEventListener('click', playMusicOnce);
+                    window.removeEventListener('touchstart', playMusicOnce);
+                }
+                window.addEventListener('click', playMusicOnce);
+                window.addEventListener('touchstart', playMusicOnce);
+            }
+        });
+        </script>
 </body>
 </html>

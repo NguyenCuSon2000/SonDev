@@ -27,6 +27,18 @@
         ">
           Happy Birthday Yến <span style="font-size:0.6em;">10-11-2000</span>
         </h1>
+        
+        <!-- Countdown Timer -->
+        <div id="countdown" class="countdown-container">
+          <div class="countdown-values">
+            <span id="days">00</span> ngày 
+            <span id="hours">00</span> giờ 
+            <span id="minutes">00</span> phút 
+            <span id="seconds">00</span> giây
+          </div>
+          <!-- <div class="countdown-text">Còn lại đến sinh nhật của Yến</div> -->
+        </div>
+
         <div class="birthday-wish" style="text-align:center;margin-bottom:18px;">
           <span class="wish-text">
             Chúc bạn sinh nhật thật hạnh phúc và ngập tràn yêu thương.<br>
@@ -98,6 +110,63 @@
           0% { transform: translateY(0) scale(1); }
           50% { transform: translateY(-18px) scale(1.08); }
           100% { transform: translateY(0) scale(1); }
+        }
+
+        /* Countdown Timer Styles */
+        .countdown-container {
+          text-align: center;
+          margin: 20px auto;
+          padding: 15px;
+          background: rgba(255, 255, 255, 0.9);
+          border-radius: 20px;
+          box-shadow: 0 4px 24px rgba(255, 178, 217, 0.5);
+          max-width: 600px;
+          animation: glow 2s infinite alternate;
+        }
+
+        .countdown-values {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 2em;
+          color: #ff4e9b;
+          text-shadow: 0 2px 4px rgba(255, 78, 155, 0.3);
+          margin-bottom: 10px;
+        }
+
+        .countdown-values span {
+          display: inline-block;
+          background: linear-gradient(45deg, #ff4e9b, #ff85c2);
+          color: white;
+          padding: 5px 10px;
+          border-radius: 10px;
+          margin: 10px 10px;
+          min-width: 60px;
+          box-shadow: 0 2px 8px rgba(255, 78, 155, 0.4);
+          animation: pulse 1s infinite alternate;
+        }
+
+        .countdown-text {
+          font-family: 'Pacifico', cursive;
+          color: #d72660;
+          font-size: 1.2em;
+          margin-top: 10px;
+        }
+
+        @keyframes glow {
+          from {
+            box-shadow: 0 4px 24px rgba(255, 178, 217, 0.5);
+          }
+          to {
+            box-shadow: 0 4px 32px rgba(255, 78, 155, 0.8);
+          }
+        }
+
+        @keyframes pulse {
+          from {
+            transform: scale(1);
+          }
+          to {
+            transform: scale(1.05);
+          }
         }
         </style>
         <div class="cake-gift-stack" style="display:flex;justify-content:center;align-items:center;gap:32px;margin:32px 0;">
@@ -256,6 +325,29 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/fireworks.js"></script>
     <script>
+    // Countdown Timer Logic
+    function updateCountdown() {
+      const targetDate = new Date('2025-11-10T00:00:00');
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff > 0) {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById('days').textContent = days.toString().padStart(2, '0');
+        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+      }
+    }
+
+    // Update countdown every second
+    setInterval(updateCountdown, 1000);
+    updateCountdown(); // Initial call
+
     // Click hộp quà sang MyLove.html
     document.addEventListener('DOMContentLoaded', function() {
         var giftBox = document.getElementById('gift-box');

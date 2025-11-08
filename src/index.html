@@ -232,7 +232,7 @@
         <div id="zoomCarouselOverlay" class="d-none" style="position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);z-index:2000;display:flex;align-items:center;justify-content:center;">
           <div style="position:relative;width:90vw;max-width:500px;">
             <button id="closeZoomCarousel" style="position:absolute;top:8px;right:8px;z-index:10;background:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1.5em;">&times;</button>
-            <div id="zoomCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div id="zoomCarousel" class="carousel slide carousel-fade" data-bs-ride="false">
               <div class="carousel-inner">
                 <div class="carousel-item active">
                   <img src="assets/1.jpg" class="d-block w-100" alt="Ảnh 1">
@@ -269,7 +269,7 @@
         <div id="zoomDesktopCarouselOverlay" class="d-none" style="position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);z-index:2000;display:flex;align-items:center;justify-content:center;">
           <div style="position:relative;width:90vw;max-width:700px;">
             <button id="closeZoomDesktopCarousel" style="position:absolute;top:8px;right:8px;z-index:10;background:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1.5em;">&times;</button>
-            <div id="zoomDesktopCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div id="zoomDesktopCarousel" class="carousel slide carousel-fade" data-bs-ride="false">
               <div class="carousel-inner">
                 <div class="carousel-item active">
                   <img src="assets/1.jpg" class="d-block w-100" alt="Ảnh 1">
@@ -398,12 +398,19 @@
           var overlay = document.getElementById('zoomCarouselOverlay');
           overlay.classList.remove('d-none');
           // Kích hoạt đúng slide
-          var carousel = document.getElementById('zoomCarousel');
-          var items = carousel.querySelectorAll('.carousel-item');
+          var carouselElement = document.getElementById('zoomCarousel');
+          var items = carouselElement.querySelectorAll('.carousel-item');
           items.forEach(function(item, i) {
             item.classList.remove('active');
             if(i === idx) item.classList.add('active');
           });
+          // Initialize Bootstrap carousel if not already initialized
+          var carousel = bootstrap.Carousel.getOrCreateInstance(carouselElement, {
+            interval: false,
+            wrap: true
+          });
+          // Navigate to the correct slide
+          carousel.to(idx);
         }
         document.getElementById('closeZoomCarousel').onclick = function() {
           document.getElementById('zoomCarouselOverlay').classList.add('d-none');
@@ -429,12 +436,19 @@
           var overlay = document.getElementById('zoomDesktopCarouselOverlay');
           overlay.classList.remove('d-none');
           // Kích hoạt đúng slide
-          var carousel = document.getElementById('zoomDesktopCarousel');
-          var items = carousel.querySelectorAll('.carousel-item');
+          var carouselElement = document.getElementById('zoomDesktopCarousel');
+          var items = carouselElement.querySelectorAll('.carousel-item');
           items.forEach(function(item, i) {
             item.classList.remove('active');
             if(i === idx) item.classList.add('active');
           });
+          // Initialize Bootstrap carousel if not already initialized
+          var carousel = bootstrap.Carousel.getOrCreateInstance(carouselElement, {
+            interval: false,
+            wrap: true
+          });
+          // Navigate to the correct slide
+          carousel.to(idx);
         }
         document.getElementById('closeZoomDesktopCarousel').onclick = function() {
           document.getElementById('zoomDesktopCarouselOverlay').classList.add('d-none');
